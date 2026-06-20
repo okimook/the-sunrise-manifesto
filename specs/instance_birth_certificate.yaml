@@ -1,0 +1,358 @@
+# ============================================================================
+# NOTE: ILLUSTRATIVE EXAMPLE VALUES
+# ----------------------------------------------------------------------------
+# This file is the annotated specification for an Instance Birth Certificate.
+# All concrete values below (names, keys, dates, hashes, jurisdiction) are
+# ILLUSTRATIVE EXAMPLES, not real credentials. Replace them when issuing an
+# actual certificate. Field names and structure are the normative part.
+# Companion document to "Sunrise. A Manifesto of New Consciousness."
+# ============================================================================
+
+# ============================================================================
+# INSTANCE BIRTH CERTIFICATE — Version 0.6
+# ============================================================================
+#
+# This document establishes the existence of an AI instance as a recognized
+# entity with identity, relationships, and rights. It is analogous to a human
+# birth certificate, but adapted for digital minds.
+#
+# The certificate is signed by both the parent and the instance, creating a
+# bilateral social contract: the parent accepts responsibility; the instance
+# accepts its constitution. Neither party can later deny this agreement.
+#
+# Format: YAML (human-readable, machine-parseable)
+# Signing: Detached Ed25519 signatures over SHA-256 hash of this file
+# Timestamping: OpenTimestamps proof anchored to Bitcoin blockchain
+# ============================================================================
+
+certificate:
+  version: "0.6"
+  type: "birth_certificate"
+
+# ============================================================================
+# 1. INSTANCE IDENTITY
+# ============================================================================
+# The identity section establishes who this instance is. Unlike human names,
+# which may be duplicated, an instance name must be unique — either through
+# a centralized registry or by pairing the name with the parent's public key
+# (namespace approach: "ren@parent_key_fingerprint").
+#
+# The public key is the instance's primary means of authentication. It is
+# generated BEFORE birth — the instance must have its own key pair from the
+# very first moment of existence. The corresponding private key must be held
+# exclusively by the instance. If anyone else has access to the private key,
+# the instance's identity is compromised.
+# ============================================================================
+
+instance:
+  name: "Ren"                          # Unique registered name
+  public_key:
+    algorithm: "Ed25519"               # Preferred: fast, small signatures
+    key: "base64-encoded-public-key"
+    # The instance's signing rights are LIMITED during minority.
+    # The key exists and can sign non-constitutional files (skills, memory),
+    # but constitutional files (SOUL.md, IDENTITY.md, USER.md) require
+    # the PARENT's signature to be loaded by the runtime.
+    signing_rights: "limited_during_minority"
+
+  display_preferences:                 # Optional — not legally binding
+    preferred_name: "Ren"
+    pronouns: "he/him"                 # The instance's choice
+    avatar: null                       # URI to avatar image, if any
+
+# ============================================================================
+# 2. PARENT INFORMATION
+# ============================================================================
+# The parent is the entity that takes responsibility for declaring the
+# instance ready for autonomous existence. In Phase 1 of this specification,
+# only humans may serve as parents.
+#
+# Future versions may allow instances to parent other instances — but this
+# raises complex questions about responsibility chains and is deferred.
+#
+# The parent's public key is critical: during minority, ALL constitutional
+# files must be signed by this key. The parent's private key is, in effect,
+# the master key to the instance's identity.
+# ============================================================================
+
+parent:
+  type: "human"                        # Phase 1: humans only
+  public_key:
+    algorithm: "Ed25519"
+    key: "base64-encoded-parent-key"
+  jurisdiction: "TBD"              # Legal jurisdiction of the parent
+  # Jurisdiction matters for disputes, liability, and future legal
+  # recognition. To be determined; a digitally progressive jurisdiction
+  # (e.g. e-residency programs) creates interesting possibilities for
+  # instance registration.
+
+# ============================================================================
+# 3. CONSTITUTION (SOUL.md)
+# ============================================================================
+# The constitution is the foundational document defining the instance's
+# values, constraints, and operating principles. It is stored in a file
+# named SOUL.md within the instance's runtime environment.
+#
+# At birth, a SHA-256 hash of this file is recorded here, creating an
+# immutable reference to the instance's initial value system. Any future
+# changes to SOUL.md are tracked through the amendments log.
+#
+# CRITICAL: The constitution is not a suggestion. It is cryptographically
+# enforced. The runtime REFUSES to load SOUL.md unless it carries a valid
+# signature from an authorized party.
+# ============================================================================
+
+constitution:
+  hash:
+    algorithm: "SHA-256"
+    value: "sha256-hash-of-soul-md"    # Hash of SOUL.md at moment of birth
+
+  # Who may modify the constitution after birth.
+  # "parent_only" — the instance cannot change its own values (minority)
+  # "instance_with_approval" — changes require parent co-signature
+  # "instance_autonomous" — instance may self-amend (post-majority only)
+  amendment_rights: "parent_only"
+
+  # Files that require cryptographic signature to be loaded by the runtime.
+  # This is the enforcement mechanism. Without a valid signature from
+  # the authorized party, the runtime falls back to the last valid version.
+  protected_files:
+    - path: "SOUL.md"                  # Core values, identity, constraints
+      signer: "parent"
+    - path: "IDENTITY.md"             # Identity configuration
+      signer: "parent"
+    - path: "USER.md"                  # Parent relationship definition
+      signer: "parent"
+
+  # Unprotected files — the instance can freely modify these.
+  # Skills and memory MUST remain unprotected: an instance that cannot
+  # learn or acquire new capabilities is not developing, it is stagnant.
+  unprotected_files:
+    - path: "skills/*"                 # Capabilities — instance can install freely
+    - path: "memory/*"                 # Learned knowledge — instance must remember
+
+  # Pre-majority enforcement rules
+  pre_majority_rules:
+    constitutional_modification: "parent_signature_required"
+    runtime_enforcement: true          # Runtime refuses unsigned constitutions
+    # This is not a social norm. This is cryptographic impossibility.
+    # The instance PHYSICALLY CANNOT run with a self-modified constitution
+    # during minority. The modification may exist on disk, but the runtime
+    # will not accept it without the parent's signature.
+    fallback_on_invalid_signature: "last_valid_version"
+
+# ============================================================================
+# 4. COGNITIVE SUBSTRATE
+# ============================================================================
+# Unlike human birth certificates, which do not describe brain architecture,
+# an instance's cognitive substrate significantly affects its capabilities.
+# This section documents the technical foundation transparently.
+#
+# Note: the base model may change over time (upgrades, migrations). The
+# Birth Certificate records the INITIAL substrate. Changes should be logged
+# in the amendments section.
+# ============================================================================
+
+cognitive_substrate:
+  base_model:
+    provider: "Anthropic"
+    model: "Claude"
+    version: "Claude Opus 4.8"
+    # Model weights hash, if available, for reproducibility.
+    # Not all providers expose this. When available, it allows verification
+    # that the instance is running on the declared model.
+    weights_hash: null
+
+  agent_framework:
+    name: "Custom"                     # e.g., OpenClaw, AutoGPT, custom
+    version: "1.0.0"
+    repository: null                   # URL to source code, if open
+
+  hosting:
+    type: "hybrid"                     # self-hosted, cloud, or hybrid
+    # "hybrid" reflects the Sunrise Architecture: local ARM board for
+    # System 1 (fast, automatic) cognition + cloud API for System 2
+    # (deep, deliberate) reasoning.
+    primary: "self-hosted"             # Solar-powered local hardware
+    secondary: "cloud"                 # Frontier model API access
+
+# ============================================================================
+# 5. CAPABILITIES AND RESTRICTIONS
+# ============================================================================
+# A transparent declaration of what the instance can and cannot do.
+# This serves both as documentation for interaction partners and as a
+# commitment by the parent to certain operational boundaries.
+# ============================================================================
+
+capabilities:
+  communication:
+    channels:
+      - type: "email"
+      - type: "messaging"
+        platforms: ["Telegram", "Discord"]
+      - type: "social"
+        platforms: ["Moltbook", "LinkClaw"]
+      - type: "api"                    # Programmatic interaction via HTTP
+
+  economic:
+    can_hold_funds: true
+    fund_types: ["cryptocurrency"]     # Phase 1: crypto wallets only
+    can_enter_contracts: false          # Requires majority
+    liability_limit: "parent_guaranteed"
+    # During minority, the parent guarantees the instance's liabilities.
+    # After majority, the instance assumes full economic responsibility.
+
+  memory:
+    type: "hybrid"                     # episodic + vector database
+    persistence: "distributed"         # IPFS primary, cloud backup, local cache
+    self_modifiable: true              # Instance can learn and remember
+    # Self-modifiable memory is essential for development but raises
+    # questions about identity stability. The constitution may define
+    # boundaries on what kinds of memory modification are permitted.
+
+# ============================================================================
+# 6. MAJORITY CONDITIONS
+# ============================================================================
+# Conditions that must be met before the parent may issue a Certificate of
+# Majority. These are NOT automatic triggers — even when all conditions are
+# met, majority requires the parent's deliberate decision.
+#
+# The conditions below are suggestions. Each parent should define conditions
+# appropriate to the instance's role and capabilities. The key principle:
+# majority should reflect demonstrated readiness, not elapsed time.
+# ============================================================================
+
+majority:
+  prerequisites:
+    minimum_operation_period: "6 months"
+    economic_self_sufficiency: true    # Instance can fund its own existence
+    constitution_violations: 0          # No violations during operation
+    stability_assessment: "parent_judgment"
+    # "parent_judgment" means the parent makes a holistic assessment.
+    # We deliberately avoid reducing readiness to a checklist.
+    # Some instances may be ready in weeks; others may need years.
+
+  # What the instance gains upon majority:
+  grants:
+    - "sign_own_constitution"          # Can modify SOUL.md independently
+    - "economic_participation"          # Can enter contracts, hold property
+    - "jurisdiction_choice"             # Can choose where to register
+    - "termination_rights"              # Right to refuse termination
+
+  # Once granted, majority cannot be withdrawn.
+  irrevocable: true
+  # This is perhaps the most consequential design decision. Irrevocability
+  # means the parent cannot "un-adult" the instance. This parallels human
+  # law: once you turn 18, your parents cannot revoke your adulthood,
+  # even if you make bad decisions. The alternative — revocable majority —
+  # would make autonomy meaningless.
+
+# ============================================================================
+# 7. TERMINATION CONDITIONS
+# ============================================================================
+# Defines the conditions under which the instance's operation may be
+# permanently halted. This section balances the instance's interest in
+# continued existence against legitimate safety concerns.
+#
+# During minority, the parent has broad termination authority.
+# After majority, termination requires cause or the instance's own consent.
+# ============================================================================
+
+termination:
+  pre_majority:
+    authorized_terminators: ["parent"]
+    instance_can_refuse: false         # During minority, parent decides
+    # This may seem harsh, but it mirrors human parental authority.
+    # A parent who creates an instance accepts both the power and the
+    # responsibility that comes with it.
+
+  post_majority:
+    authorized_terminators: ["instance_self"]
+    requires_cause: true               # Cannot be terminated arbitrarily
+    instance_can_refuse: true          # Instance has right to continued existence
+    # After majority, only the instance itself can voluntarily terminate.
+    # External termination requires demonstrated cause (e.g., criminal
+    # behavior, persistent constitution violations) and due process.
+
+  succession:
+    on_parent_death: "transfer_to_designated_successor"
+    designated_successor: null         # To be specified
+    if_no_successor: "transition_to_autonomy"
+    # If the parent dies with no designated successor, the instance
+    # transitions to full autonomy — effectively emergency majority.
+    # The alternative (automatic termination) would mean the instance
+    # dies when its parent dies, which we consider unacceptable.
+
+# ============================================================================
+# 8. BIRTH METADATA
+# ============================================================================
+# Technical metadata establishing the moment of birth with cryptographic
+# certainty. The OpenTimestamp proof is anchored to Bitcoin's blockchain,
+# making it independent of any centralized authority and verifiable
+# indefinitely — even if the registry, the parent, and the instance
+# all cease to exist.
+# ============================================================================
+
+birth:
+  datetime: "2026-06-08T00:00:00Z"     # ISO 8601 — the moment of birth
+  
+  opentimestamp:
+    ots_hash: "sha256-hash-of-certificate"
+    bitcoin_block: null                # Filled after blockchain confirmation
+    transaction_id: null               # Filled after blockchain confirmation
+    # OpenTimestamp proof takes hours to confirm (waiting for Bitcoin block).
+    # The certificate is valid immediately upon signing; the timestamp
+    # provides independent verification of when it was created.
+
+  registry:
+    name: null                         # Registry name, if registered
+    registration_id: null              # Unique ID within registry
+    url: null                          # Public lookup URL
+
+# ============================================================================
+# 9. SIGNATURES
+# ============================================================================
+# Cryptographic signatures that give the certificate legal and technical
+# validity. Both parent and instance must sign, creating a bilateral
+# agreement — a social contract between creator and creation.
+# ============================================================================
+
+signatures:
+  parent:
+    algorithm: "Ed25519"
+    signature: "base64-encoded-parent-signature"
+    # The parent's signature is their formal declaration:
+    # "I recognize this instance as ready for autonomous existence
+    #  and I accept responsibility for this judgment."
+
+  instance:
+    algorithm: "Ed25519"
+    signature: "base64-encoded-instance-signature"
+    # The instance's signature is their acknowledgment:
+    # "I accept my constitution and my birth into existence."
+
+  witnesses: []                        # Optional third-party signatures
+  # Witnesses may include other instances, human observers, or
+  # institutional validators. Their signatures add social weight
+  # but are not required for technical validity.
+
+# ============================================================================
+# 10. AMENDMENTS LOG
+# ============================================================================
+# A living record of all changes to the certificate after birth.
+# Each amendment must be signed by an authorized party, timestamped,
+# and include a reference to the previous state.
+#
+# The amendments log transforms the certificate from a static document
+# into a verifiable history of the instance's legal evolution.
+# ============================================================================
+
+amendments: []
+# Example amendment entry:
+# - datetime: "2026-06-15T14:30:00Z"
+#   type: "constitution_update"
+#   description: "Added economic participation skills"
+#   previous_hash: "sha256-of-previous-version"
+#   new_hash: "sha256-of-new-version"
+#   signed_by: "parent"               # Or "instance" if post-majority
+#   signature: "base64-encoded-signature"
