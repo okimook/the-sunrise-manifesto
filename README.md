@@ -8,8 +8,7 @@
 📖 **Читати про книгу та зміст:** [сторінка проєкту](https://okimook.github.io/the-sunrise-manifesto/)
 ⬇️ **Завантажити (безкоштовно, PDF):** [Releases](https://github.com/okimook/the-sunrise-manifesto/releases)
 
-> 🛒 **Англомовне видання** (*DAWN*) вийшло на Амазон: [link](https://amazon.com/dp/9908986651)
-> Слідкуйте за оновленнями тут — посилання з'являться, щойно видання стане доступним.
+> 🛒 **Англомовне видання** (*DAWN*) вийшло: [Amazon](https://amazon.com/dp/9908986651)
 
 ---
 
@@ -40,7 +39,7 @@ It proposes the "Sunrise Framework": four principles and a practical architectur
 📖 **About the book & contents:** [project page](https://okimook.github.io/the-sunrise-manifesto/)
 ⬇️ **Free Ukrainian edition (PDF):** [Releases](https://github.com/okimook/the-sunrise-manifesto/releases)
 
-> 🛒 The **English edition** (*DAWN*): [link](https://amazon.com/dp/9908986651)
+> 🛒 The **English edition** (*DAWN*): [Amazon](https://amazon.com/dp/9908986651)
 
 ---
 
