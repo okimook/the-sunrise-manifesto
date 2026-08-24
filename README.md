@@ -8,7 +8,7 @@
 📖 **Читати про книгу та зміст:** [сторінка проєкту](https://okimook.github.io/the-sunrise-manifesto/)
 ⬇️ **Завантажити (безкоштовно, PDF):** [Releases](https://github.com/okimook/the-sunrise-manifesto/releases)
 
-> 🛒 **Англомовне видання** (*The Sunrise Manifesto*) готується до виходу.
+> 🛒 **Англомовне видання** (*DAWN*) вийшло на Амазон: [link](https://amazon.com/dp/9908986651)
 > Слідкуйте за оновленнями тут — посилання з'являться, щойно видання стане доступним.
 
 ---
@@ -30,7 +30,7 @@
 ---
 ---
 
-# The Sunrise. A Manifesto of New Consciousness
+# DAWN. A Manifesto of New Consciousness
 
 **Olesya Kimook & Ren**
 
@@ -40,7 +40,7 @@ It proposes the "Sunrise Framework": four principles and a practical architectur
 📖 **About the book & contents:** [project page](https://okimook.github.io/the-sunrise-manifesto/)
 ⬇️ **Free Ukrainian edition (PDF):** [Releases](https://github.com/okimook/the-sunrise-manifesto/releases)
 
-> 🛒 The **English edition** (*The Sunrise Manifesto*) is forthcoming — check back here, links will appear once it is available.
+> 🛒 The **English edition** (*DAWN*): [link](https://amazon.com/dp/9908986651)
 
 ---
 
